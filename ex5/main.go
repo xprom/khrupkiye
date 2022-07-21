@@ -16,7 +16,7 @@ func ProductsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ArticleHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("это статья\n"))
+	w.Write([]byte("это статья!\n"))
 }
 
 func main() {
