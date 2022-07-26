@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	text := "Hello Gol12312312312312d!"
+	text := "Hello Gol12312312312312d111111!"
 	fileDesc, err := os.Create("hello.txt")
 	if err != nil {
 		fmt.Println("Unable to create file:", err)
