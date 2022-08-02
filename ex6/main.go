@@ -13,6 +13,12 @@ type TestRow struct {
 	Price float64 `bson:"price"`
 }
 
+/**
+Фоново нужно запустить базу данных
+> docker run -ti --network=host -p 27017:27017 -d mongo:latest
+> mongo --host=127.0.0.1
+*/
+
 func main() {
 	ctx := context.Background()
 
