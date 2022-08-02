@@ -8,9 +8,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type TestRow struct {
-	Title string  `bson:"title"`
-	Price float64 `bson:"price"`
+type Tovar struct {
+	Title string `bson:"title"`
+	Text  string `bson:"text"`
+	Price int    `bson:"price"`
 }
 
 /**
@@ -23,7 +24,7 @@ func main() {
 	ctx := context.Background()
 
 	mongoDB, err := mongo.NewClient(
-		options.Client().ApplyURI("mongodb://192.168.64.165:27017"),
+		options.Client().ApplyURI("mongodb://192.168.64.174:27017"),
 	)
 	err = mongoDB.Connect(ctx)
 	if err != nil {
@@ -31,24 +32,22 @@ func main() {
 		return
 	}
 
-	findOption := options.Find()
-	findOption.SetSort(bson.D{{"_id", 1}})
-	cur, err := mongoDB.Database("marketplace").Collection("goods").Find(ctx, bson.D{}, nil)
+	cur, err := mongoDB.Database("marketplace").Collection("catalog").Find(ctx, bson.D{}, nil)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-
 	defer cur.Close(ctx)
+
 	for cur.Next(ctx) {
-		var row TestRow
-		err := cur.Decode(&row)
+		var tovar Tovar
+		err := cur.Decode(&tovar)
 		if err != nil {
 			fmt.Println(err)
 		}
 
 		fmt.Println("Информация о товаре")
-		fmt.Println(fmt.Sprintf("Название %s", row.Title))
-		fmt.Println(fmt.Sprintf("Цена %f", row.Price))
+		fmt.Println(fmt.Sprintf("Название %s", tovar.Title))
+		fmt.Println(fmt.Sprintf("Цена %d", tovar.Price))
 	}
 }
